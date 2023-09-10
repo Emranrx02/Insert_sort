@@ -1,0 +1,169 @@
+#include<stdio.h>
+#include<stdlib.h>
+struct Node
+{
+    int data;
+    struct Node *next;
+};
+typedef struct Node node;
+node *head = NULL;
+
+void insert_first_position()
+{
+    int data;
+    printf("Enter the data item:");
+    scanf("%d", &data);
+    node *new_node;
+    new_node=(node *)malloc(sizeof(node));
+    new_node->data=data;
+    new_node->next=head;
+    head = new_node;
+}
+void insert_any_position()
+{
+    int key;
+    printf("Where you want to insert node:");
+    scanf("%d", &key);
+    node *ptr = head;
+    if(head==NULL)
+    {
+        printf("no node in linked list:\n");
+        insert_first_position();
+        return;
+    }
+    while(ptr!=NULL)
+    {
+
+        if(ptr->data==key)
+        {
+            node *new_node;
+            new_node=(node*)malloc(sizeof(node));
+            int data;
+            printf("Enter your any data item:");
+            scanf("%d", &data);
+            new_node->data= data;
+            new_node->next = ptr->next;
+            ptr->next = new_node;
+            return;
+        }
+        else
+        {
+            ptr = ptr->next;
+        }
+
+    }
+
+    insert_last_position();
+}
+void insert_last_position()
+{
+    node *new_node;
+    new_node=(node *)malloc(sizeof(node));
+    int data;
+    printf("Enter the second data item:");
+    scanf("%d", &data);
+    new_node->data=data;
+    new_node->next=NULL;
+    node *ptr=head;
+    if(head==NULL)
+    {
+        head=new_node;
+    }
+    else
+    {
+        while(ptr->next!=NULL)
+        {
+            ptr=ptr->next;
+        }
+        ptr->next=new_node;
+    }
+}
+void print()
+{
+    node *ptr=head;
+    printf("Linked list: ");
+    while(ptr!=NULL)
+    {
+        printf("%d ", ptr->data);
+        ptr=ptr->next;
+    }
+    printf("\n");
+}
+void delete_head()
+{
+    printf("Deleting head\n");
+    if(head==NULL)
+    {
+        printf("Underflow!!!\n");
+        return;
+    }
+
+    head=head->next;
+}
+void delete_last_node()
+{
+
+    printf("Deleting last node...\n");
+    node *ptr=head;
+    if(head==NULL)
+    {
+        printf("Underflow!!!\n");
+        return;
+    }
+    if(ptr->next==NULL)
+    {
+        delete_head();
+        return;
+    }
+    else
+    {
+
+        while(ptr->next->next!=NULL)
+        {
+
+            ptr=ptr->next;
+        }
+        ptr->next=NULL;
+    }
+
+}
+void delete_any_position(){
+int key;
+printf("which node you want to delete :");
+scanf("%d",&key);
+node *ptr=head;
+node *previous;
+if(ptr==NULL){
+    printf("Empty Linked List.so,delete operation is not possible");
+}
+if(ptr!=NULL & ptr->data==key){
+    head=ptr->next;
+    return;
+}
+while(ptr!=NULL &ptr->data!=key){
+    previous=ptr;
+    ptr=ptr->next;
+}
+if(ptr==NULL){
+    printf("The item is not present in linked list");
+    return;
+}
+previous->next=ptr->next;
+}
+int main()
+{
+
+
+    insert_first_position();
+    insert_last_position();
+    print();
+
+    insert_any_position();
+    print();
+   delete_any_position();
+    //delete_head();
+    print();
+    //delete_last_node();
+    //print();
+    return 0;
+}
